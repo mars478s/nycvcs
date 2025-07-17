@@ -1,0 +1,333 @@
+name: Setup Jekyll Website
+
+on:
+  workflow_dispatch: # Allows manual triggering from the GitHub Actions tab
+
+jobs:
+  setup-website:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Create directory structure
+        run: |
+          mkdir -p _layouts assets/css assets/js assets/images
+
+      - name: Create _config.yml
+        run: |
+          cat > _config.yml << 'EOF'
+          title: My Modern Website
+          description: A simple multi-tabbed website built with Jekyll
+          theme: jekyll-theme-minimal
+          baseurl: "/nycvcs"
+          url: "https://mars478s.github.io"
+          markdown: kramdown
+          permalink: pretty
+          EOF
+
+      - name: Create _layouts/default.html
+        run: |
+          cat > _layouts/default.html << 'EOF'
+          <!DOCTYPE html>
+          <html lang="en">
+          <head>
+              <meta charset="UTF-8">
+              <meta name="viewport" content="width=device-width, initial-scale=1.0">
+              <title>{{ page.title | default: site.title }}</title>
+              <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
+              <script src="{{ '/assets/js/script.js' | relative_url }}" defer></script>
+          </head>
+          <body>
+              <header>
+                  <nav class="navbar">
+                      <div class="logo">
+                          <a href="{{ '/' | relative_url }}">My Site</a>
+                      </div>
+                      <div class="nav-toggle">☰</div>
+                      <ul class="nav-menu">
+                          <li><a href="{{ '/' | relative_url }}" {% if page.url == '/' %}class="active"{% endif %}>Home</a></li>
+                          <li><a href="{{ '/about' | relative_url }}" {% if page.url contains '/about' %}class="active"{% endif %}>About</a></li>
+                          <li><a href="{{ '/projects' | relative_url }}" {% if page.url contains '/projects' %}class="active"{% endif %}>Projects</a></li>
+                          <li><a href="{{ '/contact' | relative_url }}" {% if page.url contains '/contact' %}class="active"{% endif %}>Contact</a></li>
+                      </ul>
+                  </nav>
+              </header>
+              <main>
+                  {{ content }}
+              </main>
+              <footer>
+                  <p>© {{ 'now' | date: '%Y' }} {{ site.title }}. All rights reserved.</p>
+              </footer>
+          </body>
+          </html>
+          EOF
+
+      - name: Create index.html
+        run: |
+          cat > index.html << 'EOF'
+          ---
+          layout: default
+          title: Home
+          ---
+          <section class="hero">
+              <h1>Welcome to My Website</h1>
+              <p>A modern, responsive site built with Jekyll and GitHub Pages.</p>
+              <a href="{{ '/about' | relative_url }}" class="btn">Learn More</a>
+          </section>
+          EOF
+
+      - name: Create about.md
+        run: |
+          cat > about.md << 'EOF'
+          ---
+          layout: default
+          title: About
+          ---
+          # About Me
+
+          Hi! I'm [Your Name], a developer passionate about creating modern, user-friendly websites. This site showcases my work and skills.
+
+          - **Skills**: HTML, CSS, JavaScript, Jekyll
+          - **Hobbies**: Coding, reading, hiking
+          - **Location**: [Your City, Country]
+
+          Feel free to explore my [Projects]({{ '/projects' | relative_url }}) or [Contact]({{ '/contact' | relative_url }}) me!
+          EOF
+
+      - name: Create projects.md
+        run: |
+          cat > projects.md << 'EOF'
+          ---
+          layout: default
+          title: Projects
+          ---
+          # My Projects
+
+          Here are some of my recent projects:
+
+          - **Project 1**: A responsive portfolio site built with HTML and CSS. [View on GitHub](#).
+          - **Project 2**: A JavaScript-based task manager app. [View on GitHub](#).
+          - **Project 3**: A blog powered by Jekyll. [View on GitHub](#).
+
+          More projects coming soon!
+          EOF
+
+      - name: Create contact.md
+        run: |
+          cat > contact.md << 'EOF'
+          ---
+          layout: default
+          title: Contact
+          ---
+          # Contact Me
+
+          Get in touch with me:
+
+          - **Email**: [your.email@example.com](mailto:your.email@example.com)
+          - **GitHub**: [github.com/mars478s](https://github.com/mars478s)
+          - **LinkedIn**: [linkedin.com/in/your-profile](https://linkedin.com/in/your-profile)
+
+          Or use the form below (requires backend setup, not included here):
+
+          <form>
+              <label for="name">Name:</label><br>
+              <input type="text" id="name" name="name" required><br>
+              <label for="email">Email:</label><br>
+              <input type="email" id="email" name="email" required><br>
+              <label for="message">Message:</label><br>
+              <textarea id="message" name="message" required></textarea><br>
+              <button type="submit" class="btn">Send</button>
+          </form>
+          EOF
+
+      - name: Create assets/css/style.css
+        run: |
+          cat > assets/css/style.css << 'EOF'
+          /* Reset default styles */
+          * {
+              margin: 0;
+              padding: 0;
+              box-sizing: border-box;
+          }
+
+          body {
+              font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+              line-height: 1.6;
+              color: #333;
+              background-color: #f4f4f4;
+          }
+
+          /* Navbar */
+          .navbar {
+              background-color: #007bff;
+              padding: 1rem;
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+          }
+
+          .logo a {
+              color: white;
+              text-decoration: none;
+              font-size: 1.5rem;
+              font-weight: bold;
+          }
+
+          .nav-menu {
+              list-style: none;
+              display: flex;
+              gap: 1.5rem;
+          }
+
+          .nav-menu li a {
+              color: white;
+              text-decoration: none;
+              font-weight: 500;
+              transition: color 0.3s;
+          }
+
+          .nav-menu li a:hover, .nav-menu li a.active {
+              color: #ffd700;
+          }
+
+          .nav-toggle {
+              display: none;
+              color: white;
+              font-size: 1.5rem;
+              cursor: pointer;
+          }
+
+          /* Hero Section */
+          .hero {
+              text-align: center;
+              padding: 4rem 2rem;
+              background: linear-gradient(135deg, #007bff, #00c4b4);
+              color: white;
+          }
+
+          .hero h1 {
+              font-size: 2.5rem;
+              margin-bottom: 1rem;
+          }
+
+          .hero p {
+              font-size: 1.2rem;
+              margin-bottom: 2rem;
+          }
+
+          /* Button */
+          .btn {
+              display: inline-block;
+              padding: 0.75rem 1.5rem;
+              background-color: #007bff;
+              color: white;
+              text-decoration: none;
+              border-radius: 5px;
+              transition: background-color 0.3s;
+          }
+
+          .btn:hover {
+              background-color: #0056b3;
+          }
+
+          /* Main Content */
+          main {
+              max-width: 800px;
+              margin: 2rem auto;
+              padding: 0 1rem;
+          }
+
+          main h1 {
+              font-size: 2rem;
+              margin-bottom: 1rem;
+          }
+
+          main p, main ul, main form {
+              margin-bottom: 1rem;
+          }
+
+          form input, form textarea {
+              width: 100%;
+              padding: 0.5rem;
+              margin-bottom: 1rem;
+              border: 1px solid #ccc;
+              border-radius: 5px;
+          }
+
+          form button {
+              cursor: pointer;
+          }
+
+          /* Footer */
+          footer {
+              text-align: center;
+              padding: 1rem;
+              background-color: #333;
+              color: white;
+          }
+
+          /* Responsive Design */
+          @media (max-width: 768px) {
+              .nav-menu {
+                  display: none;
+                  flex-direction: column;
+                  position: absolute;
+                  top: 60px;
+                  left: 0;
+                  width: 100%;
+                  background-color: #007bff;
+                  padding: 1rem;
+              }
+
+              .nav-menu.active {
+                  display: flex;
+              }
+
+              .nav-toggle {
+                  display: block;
+              }
+
+              .hero h1 {
+                  font-size: 1.8rem;
+              }
+
+              .hero p {
+                  font-size: 1rem;
+              }
+          }
+          EOF
+
+      - name: Create assets/js/script.js
+        run: |
+          cat > assets/js/script.js << 'EOF'
+          document.addEventListener('DOMContentLoaded', () => {
+              const navToggle = document.querySelector('.nav-toggle');
+              const navMenu = document.querySelector('.nav-menu');
+
+              navToggle.addEventListener('click', () => {
+                  navMenu.classList.toggle('active');
+              });
+          });
+          EOF
+
+      - name: Create .nojekyll
+        run: touch .nojekyll
+
+      - name: Commit files
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add .
+          git commit -m "Add multi-tabbed Jekyll website for GitHub Pages" || echo "No changes to commit"
+          git push origin $BRANCH
+        env:
+          BRANCH: main
+
+      - name: Setup GitHub Pages
+        uses: actions/configure-pages@v5
+        with:
+          enablement: true
+          source_branch: main
+          source_path: /
