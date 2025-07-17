@@ -9,21 +9,21 @@ body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     line-height: 1.6;
     color: #333;
-    background-color: #f4f4f4;
+    background-color: #d3d3d3; /* Light grey background */
 }
 
 /* Navbar */
 .navbar {
-    background-color: #007bff;
+    background-color: #4a4a4a; /* Dark silver/gunmetal */
     padding: 1rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 
 .logo a {
-    color: white;
+    color: #ffffff; /* White for contrast */
     text-decoration: none;
     font-size: 1.5rem;
     font-weight: bold;
@@ -36,7 +36,7 @@ body {
 }
 
 .nav-menu li a {
-    color: white;
+    color: #ffffff; /* White for nav links */
     text-decoration: none;
     font-weight: 500;
     transition: color 0.3s;
@@ -44,12 +44,12 @@ body {
 
 .nav-menu li a:hover,
 .nav-menu li a.active {
-    color: #ffd700;
+    color: #b0b0b0; /* Light silver highlight */
 }
 
 .nav-toggle {
     display: none;
-    color: white;
+    color: #ffffff;
     font-size: 1.5rem;
     cursor: pointer;
 }
@@ -58,8 +58,8 @@ body {
 .hero {
     text-align: center;
     padding: 4rem 2rem;
-    background: linear-gradient(135deg, #007bff, #0056b3);
-    color: white;
+    background: linear-gradient(135deg, #4a4a4a, #2f2f2f); /* Gunmetal to darker gunmetal */
+    color: #ffffff;
 }
 
 .hero h1 {
@@ -76,15 +76,15 @@ body {
 .btn {
     display: inline-block;
     padding: 0.75rem 1.5rem;
-    background-color: #007bff;
-    color: white;
+    background-color: #4a4a4a; /* Dark silver/gunmetal */
+    color: #ffffff;
     text-decoration: none;
     border-radius: 5px;
     transition: background-color 0.3s;
 }
 
 .btn:hover {
-    background-color: #0056b3;
+    background-color: #2f2f2f; /* Darker gunmetal */
 }
 
 /* Main Content */
@@ -96,7 +96,7 @@ main {
 
 main h2 {
     font-size: 2rem;
-    color: #007bff;
+    color: #4a4a4a; /* Dark silver/gunmetal */
     margin-bottom: 1rem;
 }
 
@@ -121,30 +121,30 @@ form {
 form input,
 form textarea {
     padding: 0.5rem;
-    border: 1px solid #ccc;
+    border: 1px solid #4a4a4a; /* Dark silver border */
     border-radius: 5px;
     font-size: 1rem;
 }
 
 form button {
     cursor: pointer;
-    background-color: #007bff;
-    color: white;
+    background-color: #4a4a4a; /* Dark silver/gunmetal */
+    color: #ffffff;
     border: none;
     padding: 0.75rem;
     border-radius: 5px;
 }
 
 form button:hover {
-    background-color: #0056b3;
+    background-color: #2f2f2f; /* Darker gunmetal */
 }
 
 /* Footer */
 footer {
     text-align: center;
     padding: 1rem;
-    background-color: #333;
-    color: white;
+    background-color: #2f2f2f; /* Darker gunmetal */
+    color: #ffffff;
 }
 
 /* Responsive Design */
@@ -156,7 +156,7 @@ footer {
         top: 60px;
         left: 0;
         width: 100%;
-        background-color: #007bff;
+        background-color: #4a4a4a; /* Dark silver/gunmetal */
         padding: 1rem;
     }
 
